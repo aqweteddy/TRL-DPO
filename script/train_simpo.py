@@ -103,7 +103,8 @@ if __name__ == "__main__":
     # Dataset
     ################
     dataset = load_dataset(**eval(script_args.dataset_name))['train']
-    dataset = dataset.map(process, num_proc=12, remove_columns=dataset.column_names)
+    dataset = dataset.map(process, num_proc=12)
+    dataset = dataset.remove_columns(set(dataset.column_names) - {"chosen", "rejected"})
     
     dataset = dataset.train_test_split(test_size=100)
     if tokenizer.chat_template is None:
