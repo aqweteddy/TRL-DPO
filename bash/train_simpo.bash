@@ -8,7 +8,7 @@ export LAUNCHER="accelerate launch \
     --rdzv_backend c10d \
     "
 
-export DATASET="{'path':'aqweteddy/mrc','revision':'spin-v0','token':'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'}"
+export DATASET="{'path':'aqweteddy/mrc','revision':'spin-v0'}"
 export MODEL=/workspace/TRL-DPO/llama3.2-3b-instruct_ft-v2c-e2
 export OUTPUT_MODEL_PATH="/workspace/TRL-DPO/ckpt/llama3.2-3b-instruct_ft-v2c-e2_dpo-v0"
 
