@@ -1,0 +1,7 @@
+trl 
+bitsandbytes 
+peft
+deepsppeed
+wandb
+sentencepiece
+liger-kernel
