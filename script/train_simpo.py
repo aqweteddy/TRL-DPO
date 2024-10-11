@@ -70,9 +70,17 @@ class ScriptArguments:
     )
     
 def process(row):
-    row["prompt"] = tokenizer.apply_chat_template(row['prompt'], tokenize=False, add_generation_prompt=True)
-    row['chosen'] = row['chosen'] + tokenizer.eos_token
-    row['rejected'] = row['rejected'] + tokenizer.eos_token
+    if isinstance(row['chosen'], str):
+        row['chosen'] = [
+            {'role': 'user', 'content': row['prompt'][0]['content']},
+            {'role': 'assistant', 'content': row['rejected']}
+        ]
+    if isinstance(row['rejected'], str):
+        row['rejected'] = [
+            {'role': 'user', 'content': row['prompt'][0]['content']},
+            {'role': 'assistant', 'content': row['rejected']}
+        ]
+    
     return row
 
 if __name__ == "__main__":
@@ -96,7 +104,7 @@ if __name__ == "__main__":
     ################
     dataset = load_dataset(**eval(script_args.dataset_name))['train']
     dataset = dataset.train_test_split(test_size=100)
-    dataset = dataset.map(process, num_proc=12)
+    dataset = dataset.map(process, num_proc=12, remove_columns=dataset.column_names)
     if tokenizer.chat_template is None:
         tokenizer.chat_template = SIMPLE_CHAT_TEMPLATE
 
