@@ -69,7 +69,7 @@ class ScriptArguments:
         metadata={"help": "The name of the dataset to use."},
     )
     def process(row):
-        row["prompt"] = tokenizer.apply_chat_template(row["chosen"][:-1], tokenize=False, add_generation_prompt=True)
+        row["prompt"] = tokenizer.apply_chat_template(row["prompt"], tokenize=False, add_generation_prompt=True)
         row['chosen'] = row['chosen'] + tokenizer.eos_token
         row['rejected'] = row['rejected'] + tokenizer.eos_token
         return row
